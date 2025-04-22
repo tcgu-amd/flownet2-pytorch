@@ -43,7 +43,8 @@ L1 and L2 losses with multi-scale support are available in [losses.py](./losses.
 
     # install custom layers
     bash install.sh
-    
+### Installation for ROCm (AMD Platform)
+
 ### Python requirements 
 Currently, the code supports python 3
 * numpy 

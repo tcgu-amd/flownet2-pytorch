@@ -2,7 +2,7 @@
 import os,shutil
 import torch
 
-USE_ROCM=True
+USE_ROCM=os.getenv("USE_ROCM")
 
 from setuptools import setup
 from torch.utils.cpp_extension import BuildExtension, CUDAExtension
