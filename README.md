@@ -52,8 +52,12 @@ cd flownet2-pytorch
 # Install torch with rocm 
 # make sure to use python 3.9
 # a venv is recommended
+python3.9 -m venv env
+source ./env/bin/activate
+sudo apt install python3.9-dev
 wget https://repo.radeon.com/rocm/manylinux/rocm-rel-6.2.4/torch-1.13.1%2Brocm6.2.4-cp39-cp39-linux_x86_64.whl
-python3.9 -m pip install ./torch-1.13.1%2Brocm6.2.4-cp39-cp39-linux_x86_64.whl
+python -m pip install ./torch-1.13.1%2Brocm6.2.4-cp39-cp39-linux_x86_64.whl
+#(Optional) Run https://bootstrap.pypa.io/get-pip.py if python3.9 -m pip doesn't work
 
 # Run the installation script
 export PYTROCH_ROCM_ARCH=gfx1100 #Modify this as you see fit
