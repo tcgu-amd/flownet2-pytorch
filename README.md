@@ -49,6 +49,13 @@ L1 and L2 losses with multi-scale support are available in [losses.py](./losses.
 git clone https://github.com/NVIDIA/flownet2-pytorch.git
 cd flownet2-pytorch
 
+# Install torch with rocm 
+# make sure to use python 3.9
+# a venv is recommended
+wget https://repo.radeon.com/rocm/manylinux/rocm-rel-6.2.4/torch-1.13.1%2Brocm6.2.4-cp39-cp39-linux_x86_64.whl
+python3.9 -m pip install ./torch-1.13.1%2Brocm6.2.4-cp39-cp39-linux_x86_64.whl
+
+# Run the installation script
 export PYTROCH_ROCM_ARCH=gfx1100 #Modify this as you see fit
 export USE_ROCM=True
 bash install.sh
