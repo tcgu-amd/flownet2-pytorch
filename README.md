@@ -44,7 +44,15 @@ L1 and L2 losses with multi-scale support are available in [losses.py](./losses.
     # install custom layers
     bash install.sh
 ### Installation for ROCm (AMD Platform)
+```
+# get flownet2-pytorch source
+git clone https://github.com/NVIDIA/flownet2-pytorch.git
+cd flownet2-pytorch
 
+export PYTROCH_ROCM_ARCH=gfx1100 #Modify this as you see fit
+export USE_ROCM=True
+bash install.sh
+```
 ### Python requirements 
 Currently, the code supports python 3
 * numpy 
