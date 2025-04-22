@@ -33,7 +33,7 @@ if not USE_ROCM:
 
 else:
     # Use CppExtension instead of CUDAExtension  
-    from torch.utils.cpp_extension import CppExtension, CUDAExtension  
+    from torch.utils.cpp_extension import CppExtension
     
     # Standard C++ flags  
     cxx_args = ['-std=c++14', "-Wno-everything"]  
