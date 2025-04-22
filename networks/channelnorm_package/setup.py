@@ -46,38 +46,29 @@ else:
     proj_dir = os.path.dirname(os.path.dirname(source_dir))
     out_dir = proj_dir
 
-    includes = [
-        "networks/channelnorm_package/channelnorm_kernel.cu",
-        "networks/channelnorm_package/channelnorm_kernel.cuh",
-        "networks/channelnorm_package/channelnorm_cuda.cc",
-    ]
-    includes = [os.path.join(proj_dir, include) for include in includes]
+    includes = []
+    for file in os.listdir(source_dir):
+        if not os.path.splitext(file)[-1] in [".cu", ".cc", ".cuh"]:
+            continue
+        includes.append(os.path.join(source_dir, file))
 
     hipify_python.hipify(
         project_directory=proj_dir,
         output_directory=out_dir,
         includes=includes,
         hip_clang_launch=True,
+        is_pytorch_extension=True
     )
 
     hip_dir = os.path.join(source_dir, "hip")
-
-    #Copy other source files not converted by hipify
-    for file in os.listdir(source_dir):
-        filepath = os.path.join(source_dir, file)
-        if not os.path.isfile(filepath):
-            continue
-        if os.path.splitext(file)[-1] not in [".cc", ".cpp", ".hip", "c"]:
-            continue
-        shutil.copyfile(os.path.join(source_dir, file),
-                        os.path.join(hip_dir, file))
     
     #Add all source files
-    files = []
-    for file in os.listdir(hip_dir):
-        if os.path.splitext(file)[-1] in [".cuh", ".h", ".hpp"]:
+    files = [os.path.join(source_dir, "channelnorm_cuda.cc")]
+    for file in os.listdir(source_dir):
+        if not os.path.splitext(file)[-1] in [".hip"]:    
             continue
-        files.append(os.path.join(hip_dir, file))
+        file = os.path.join(source_dir, file)
+        files.append(file)
 
     setup(  
         # Consider renaming the package/extension for clarity  
@@ -88,8 +79,9 @@ else:
                 'channelnorm_cuda',  
                 files,
                 # Pass combined args; hipcc usually picks these up  
-                extra_compile_args={'cxx': compile_args}  
-                # No separate 'hipcc' key needed typically  
+                extra_compile_args={'cxx': compile_args,
+                                    'hipcc': compile_args}
+                # No separate 'hipcc' key needed typically
             )  
         ],  
         cmdclass={  
